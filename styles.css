@@ -23,7 +23,7 @@ html, body {
 
 
 header {
-    background-color: var(--500);
+    background-color: var(--600);
     color: var(--100);
     display: flex;
     align-items: center;
@@ -38,6 +38,36 @@ main {
     height: 100%;
     background-color: var(--300);
     color: var(--900);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+main h2 {
+    font-size: 18px;
+    margin: 5px;
+}
+
+.gameboard {
+    text-align: center;
+    height: 50%;
+    width: 50%;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    margin: 15px;
+    border: 1px solid var(--900);
+}
+
+.gameboard > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-box {
+    border: 1px dotted var(--900);
 }
 
 footer {
@@ -46,6 +76,6 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--500);
+    background-color: var(--600);
     color: var(--100);
 }
