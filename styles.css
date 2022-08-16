@@ -1,0 +1,51 @@
+:root {
+    --50: #f8fafc;
+    --100: #f1f5f9;
+    --200: #e2e8f0;
+    --300: #cbd5e1;
+    --400: #94a3b8;
+    --500: #64748b;
+    --600: #475569;
+    --700: #334155;
+    --800: #1e293b;
+    --900: #0f172a;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 6fr 0.5fr;
+}
+
+
+header {
+    background-color: var(--500);
+    color: var(--100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    font-size: 36px;
+}
+
+main {
+    height: 100%;
+    background-color: var(--300);
+    color: var(--900);
+}
+
+footer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--500);
+    color: var(--100);
+}
