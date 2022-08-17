@@ -75,6 +75,10 @@ main h2 {
   color: var(--900);
 }
 
+.game-box:hover {
+    cursor: pointer;
+}
+
 footer {
   grid-row-start: 3;
   grid-row-end: 4;
