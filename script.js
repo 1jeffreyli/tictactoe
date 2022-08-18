@@ -1,8 +1,9 @@
 const gameBoard = (() => {
-  const board = ["", "", "", "", "", " ", " ", " ", " "];
-
+  const board = ["", "", "", "", "", "", "", "", ""];
+  const boardcontainer = document.querySelector(".gameboard");
   return {
     board,
+    boardcontainer
   };
 })();
 
@@ -28,14 +29,12 @@ const playerFactory = (() => {
 const displayController = (() => {
   const render = (array) => {
     for (let i = 0; i < array.length; i++) {
-      const boardcontainer = document.querySelector(".gameboard");
       const div = document.createElement("div");
       div.classList.add("game-box");
       div.innerHTML = array[i];
-      boardcontainer.appendChild(div);
+      gameBoard.boardcontainer.appendChild(div);
     }
-    const boardcontainer = document.querySelector(".gameboard");
-    boardcontainer.addEventListener("click", addMarker);
+    gameBoard.boardcontainer.addEventListener("click", addMarker);
   };
   const addMarker = (event) => {
     const target = event.target;
