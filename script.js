@@ -1,16 +1,37 @@
 const gameBoard = (() => {
-  const board = ["", "", "", "", "", "", "", "", ""];
+  let board = ["", "", "", "", "", "", "", "", ""];
   const boardcontainer = document.querySelector(".gameboard");
+  const boxes = document.querySelectorAll(".game-box");
+  const updateBoard = () => {
+    board = Array.from(boxes);
+    displayController.render();
+  }
   return {
     board,
-    boardcontainer
+    boardcontainer,
+    boxes,
+    updateBoard
   };
 })();
 
-const playerFactory = (name, character) => {
+const playerFactory = (() => {
+  let turn = true;
+  const changeTurn = () => {
+    if (turn === true) {
+      turn = false;
+      currentTurn[0] = "X";
+    } else {
+      turn = true;
+      currentTurn[0] = "O";
+    }
+  };
+  let currentTurn = [];
 
-  return {  };
-};
+  return {
+    currentTurn,
+    changeTurn,
+  };
+})();
 
 const displayController = (() => {
   const render = (array) => {
@@ -18,25 +39,26 @@ const displayController = (() => {
     gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
-      div.innerHTML = cell;
+      div.textContent = cell;
       gameBoard.boardcontainer.appendChild(div);
     })
+    gameBoard.boardcontainer.addEventListener("click", addMarker);
   }
   const reset = () => {
     gameBoard.boardcontainer.innerHTML = "";
   }
   
-  // const addMarker = (event) => {
-  //   const target = event.target;
-  //   if (target.matches("div")) {
-  //     if (target.innerHTML === "O" || target.innerHTML === "X") {
-  //       alert("Sorry, please choose a different square");
-  //     } else if (target.innerHTML != "O" && target.innerHTML != "X") {
-  //       playerFactory.changeTurn();
-  //       target.innerHTML = playerFactory.currentTurn[0];
-  //     }
-  //   }
-  // };
+  const addMarker = (event) => {
+    const target = event.target;
+    if (target.matches("div")) {
+      if (target.innerHTML === "O" || target.innerHTML === "X") {
+        alert("Sorry, please choose a different square");
+      } else if (target.innerHTML != "O" && target.innerHTML != "X") {
+        playerFactory.changeTurn();
+        target.innerHTML = playerFactory.currentTurn[0];
+      }
+    }
+  };
   return {
     render,
   };
