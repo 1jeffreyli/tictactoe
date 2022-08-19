@@ -7,46 +7,36 @@ const gameBoard = (() => {
   };
 })();
 
-const playerFactory = (() => {
-  let turn = true;
-  const changeTurn = () => {
-    if (turn === true) {
-      turn = false;
-      currentTurn[0] = "X";
-    } else {
-      turn = true;
-      currentTurn[0] = "O";
-    }
-  };
-  let currentTurn = [];
+const playerFactory = (name, character) => {
 
-  return {
-    currentTurn,
-    changeTurn,
-  };
-})();
+  return {  };
+};
 
 const displayController = (() => {
   const render = (array) => {
-    for (let i = 0; i < array.length; i++) {
+    reset();
+    gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
-      div.innerHTML = array[i];
+      div.innerHTML = cell;
       gameBoard.boardcontainer.appendChild(div);
-    }
-    gameBoard.boardcontainer.addEventListener("click", addMarker);
-  };
-  const addMarker = (event) => {
-    const target = event.target;
-    if (target.matches("div")) {
-      if (target.innerHTML === "O" || target.innerHTML === "X") {
-        alert("Sorry, please choose a different square");
-      } else if (target.innerHTML != "O" && target.innerHTML != "X") {
-        playerFactory.changeTurn();
-        target.innerHTML = playerFactory.currentTurn[0];
-      }
-    }
-  };
+    })
+  }
+  const reset = () => {
+    gameBoard.boardcontainer.innerHTML = "";
+  }
+  
+  // const addMarker = (event) => {
+  //   const target = event.target;
+  //   if (target.matches("div")) {
+  //     if (target.innerHTML === "O" || target.innerHTML === "X") {
+  //       alert("Sorry, please choose a different square");
+  //     } else if (target.innerHTML != "O" && target.innerHTML != "X") {
+  //       playerFactory.changeTurn();
+  //       target.innerHTML = playerFactory.currentTurn[0];
+  //     }
+  //   }
+  // };
   return {
     render,
   };
@@ -54,4 +44,5 @@ const displayController = (() => {
 
 // iterate through the board array and render it on
 // the page
-displayController.render(gameBoard.board);
+// displayController.render(gameBoard.board);
+gameBoard.boardcontainer.addEventListener("click", displayController.render(gameBoard.board));
