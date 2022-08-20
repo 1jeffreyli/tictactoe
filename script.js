@@ -14,11 +14,11 @@ const Player = (name, character) => {
 
 const displayController = (() => {
   function render (array) {
-    reset();
+    // reset();
     gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
-      div.textContent = cell;
+      div.innerText = cell;
       gameBoard.boardContainer.appendChild(div);
     })
   }
@@ -35,15 +35,15 @@ const gameController = (() => {
   const playerX = Player("Jane", "X");
   const playerO = Player("John", "O");
   let round = 1;
-  function play(event, index) {
+  function play(event) {
     const target = event.target;
     if (target.matches("div")) {
-      if (target.textContent === "O" || target.textContent === "X") {
+      if (target.innerText === "O" || target.innerText === "X") {
         alert("Sorry, please choose a different square");
-      } else if (target.textContent != "O" && target.textContent != "X") {
+      } else if (target.innerText != "O" && target.innerText != "X") {
         const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
-        target.textContent = marker;
-        // gameBoard.board[index] = marker;
+        target.innerText = marker;
+        gameBoard.updateBoard();
       }
     }
     round++; 
@@ -59,11 +59,20 @@ const gameController = (() => {
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
   const boardContainer = document.querySelector(".gameboard");
+  const boxes = document.getElementsByClassName("game-box");
+  const boxesArr = Array.from(boxes);
   boardContainer.addEventListener("click", gameController.play);
+  function updateBoard () {
+    for (let i = 0; i < 9; i++) {
+      board[i] = boxes[i].innerText;
+    }
+  }
   return {
     board,
+    boxes,
+    boxesArr,
     boardContainer,
-    
+    updateBoard
   }
 }) ();
 
