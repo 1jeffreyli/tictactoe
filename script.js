@@ -54,10 +54,30 @@ const gameController = (() => {
     round++; 
   }
 
+  function checkWin () {
+    const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
+    let winConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8]
+    ]
+    winConditions.forEach(item => {
+      if (gameBoard.board[item[0]] === marker && gameBoard.board[item[1]] === marker && gameBoard.board[item[2]] === marker) {
+        alert(`${marker} winner!`);
+      };
+    });
+  }
+  
   return{
     playerX,
     playerO,
-    play
+    play,
+    checkWin
   }
 }) ();
 
@@ -72,11 +92,11 @@ const gameBoard = (() => {
     for (let i = 0; i < 9; i++) {
       board[i] = boxes[i].innerText;
     }
+    gameController.checkWin();
   }
   return {
     board,
     boxes,
-    boxesArr,
     boardContainer,
     updateBoard
   }
