@@ -2,21 +2,25 @@ const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
   const boardcontainer = document.querySelector(".gameboard");
   const boxes = document.querySelectorAll(".game-box");
-  const updateBoard = () => {
-    board = Array.from(boxes);
-    displayController.render();
-  }
+  // const updateBoard = () => {
+  //   const boxesArr = Array.from(boxes);
+  //   boxesArr.forEach(box => {
+  //     box.addEventListener("click", event => {
+  //       let index = boxesArr.indexOf(box);
+  //     })
+  //   }
+  // }
   return {
     board,
     boardcontainer,
     boxes,
-    updateBoard
+    // updateBoard
   };
 })();
 
 const playerFactory = (() => {
   let turn = true;
-  const changeTurn = () => {
+  function changeTurn() {
     if (turn === true) {
       turn = false;
       currentTurn[0] = "X";
@@ -24,7 +28,7 @@ const playerFactory = (() => {
       turn = true;
       currentTurn[0] = "O";
     }
-  };
+  }
   let currentTurn = [];
 
   return {
@@ -34,21 +38,21 @@ const playerFactory = (() => {
 })();
 
 const displayController = (() => {
-  const render = (array) => {
+  function render(array) {
     reset();
     gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
-      div.textContent = cell;
+      div.innerHTML = cell;
       gameBoard.boardcontainer.appendChild(div);
-    })
+    });
     gameBoard.boardcontainer.addEventListener("click", addMarker);
   }
-  const reset = () => {
+  function reset() {
     gameBoard.boardcontainer.innerHTML = "";
   }
   
-  const addMarker = (event) => {
+  function addMarker(event) {
     const target = event.target;
     if (target.matches("div")) {
       if (target.innerHTML === "O" || target.innerHTML === "X") {
@@ -58,7 +62,7 @@ const displayController = (() => {
         target.innerHTML = playerFactory.currentTurn[0];
       }
     }
-  };
+  }
   return {
     render,
   };
