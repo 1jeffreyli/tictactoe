@@ -71,7 +71,7 @@ const gameController = (() => {
       if (gameBoard.board[item[0]] === marker && gameBoard.board[item[1]] === marker && gameBoard.board[item[2]] === marker) {
         alert(`${marker} winner!`);
         gameOver = true;
-      } else if (round === 9 && gameOver === false) {
+      } else if (round === 9 && gameOver === false && gameBoard.board[item[0]] !== marker && gameBoard.board[item[1]] !== marker) {
         gameOver = true;
         alert("Tie");
       };
