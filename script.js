@@ -10,16 +10,7 @@ const Player = (name, character) => {
   return { getName, getCharacter }
   }
 
-const gameBoard = (() => {
-  let board = ["", "", "", "", "", "", "", "", ""];
-  const boardContainer = document.querySelector(".gameboard");
-  
-  return {
-    board,
-    boardContainer,
-    
-  }
-}) ();
+
 
 const displayController = (() => {
   function render (array) {
@@ -41,7 +32,39 @@ const displayController = (() => {
 }) ();
 
 const gameController = (() => {
+  const playerX = Player("Jane", "X");
+  const playerO = Player("John", "O");
+  let round = 1;
+  function play(event, index) {
+    const target = event.target;
+    if (target.matches("div")) {
+      if (target.textContent === "O" || target.textContent === "X") {
+        alert("Sorry, please choose a different square");
+      } else if (target.textContent != "O" && target.textContent != "X") {
+        const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
+        target.textContent = marker;
+        // gameBoard.board[index] = marker;
+      }
+    }
+    round++; 
+  }
 
+  return{
+    playerX,
+    playerO,
+    play
+  }
+}) ();
+
+const gameBoard = (() => {
+  let board = ["", "", "", "", "", "", "", "", ""];
+  const boardContainer = document.querySelector(".gameboard");
+  boardContainer.addEventListener("click", gameController.play);
+  return {
+    board,
+    boardContainer,
+    
+  }
 }) ();
 
 displayController.render(gameBoard.board);
