@@ -13,6 +13,7 @@ const Player = (name, character) => {
 
 
 const displayController = (() => {
+  // displays the gameboard using DOM methods
   function render (array) {
     gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
@@ -31,20 +32,25 @@ const displayController = (() => {
 }) ();
 
 const gameController = (() => {
+  // assign X and O roles
   const playerX = Player("Jane", "X");
   const playerO = Player("John", "O");
+  // round indicator, starting at 1 and maxing out at 9 because all boxes will be occupied
   let round = 1;
   function play(event) {
     const target = event.target;
     if (target.matches("div")) {
+      // logic that blocks further moves on a filled box
       if (target.innerText === "O" || target.innerText === "X") {
         alert("Sorry, please choose a different square");
+        // if box is empty, check which player goes then add their marker and update the board
       } else if (target.innerText != "O" && target.innerText != "X") {
         const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
         target.innerText = marker;
         gameBoard.updateBoard();
       }
     }
+    // go to the next round
     round++; 
   }
 
@@ -59,8 +65,9 @@ const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
   const boardContainer = document.querySelector(".gameboard");
   const boxes = document.getElementsByClassName("game-box");
-  const boxesArr = Array.from(boxes);
+  // use event delegation on the container instead of individually adding 9 event listeners
   boardContainer.addEventListener("click", gameController.play);
+  // iterate through the DOM to update the board array
   function updateBoard () {
     for (let i = 0; i < 9; i++) {
       board[i] = boxes[i].innerText;
