@@ -14,7 +14,6 @@ const Player = (name, character) => {
 
 const displayController = (() => {
   function render (array) {
-    // reset();
     gameBoard.board.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
