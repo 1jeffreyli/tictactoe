@@ -26,8 +26,11 @@ const displayController = (() => {
 
   function reset () {
     gameBoard.board = ["", "", "", "", "", "", "", "", ""];
-    gameBoard.boxes.innerText = "";
-    // render(gameBoard.board);
+    for (let i = 0; i < 9; i++) {
+      gameBoard.boardContainer.innerText= "";
+      render(gameBoard.board);
+      gameController.round = 1;
+    }
   }
   resetBtn.addEventListener("click", reset);
   return {
@@ -53,7 +56,7 @@ const gameController = (() => {
         target.innerText = marker;
         gameBoard.updateBoard();
         // go to the next round
-        round++; 
+        return round++; 
       }
     }
   }
@@ -85,6 +88,7 @@ const gameController = (() => {
   return{
     playerX,
     playerO,
+    round,
     play,
     checkWin
   }
@@ -105,8 +109,8 @@ const gameBoard = (() => {
   }
   return {
     board,
-    boxes,
     boardContainer,
+    boxes,
     updateBoard
   }
 }) ();
