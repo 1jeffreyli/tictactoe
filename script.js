@@ -13,6 +13,7 @@ const Player = (name, character) => {
 
 
 const displayController = (() => {
+  const resetBtn = document.getElementById("reset");
   // displays the gameboard using DOM methods
   function render (array) {
     gameBoard.board.forEach((cell) => {
@@ -24,8 +25,11 @@ const displayController = (() => {
   }
 
   function reset () {
-    gameBoard.boardContainer.innerHTML = "";
+    gameBoard.board = ["", "", "", "", "", "", "", "", ""];
+    gameBoard.boxes.innerText = "";
+    // render(gameBoard.board);
   }
+  resetBtn.addEventListener("click", reset);
   return {
     render
   }
@@ -48,10 +52,10 @@ const gameController = (() => {
         const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
         target.innerText = marker;
         gameBoard.updateBoard();
+        // go to the next round
+        round++; 
       }
     }
-    // go to the next round
-    round++; 
   }
 
   function checkWin () {

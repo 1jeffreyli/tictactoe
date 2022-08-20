@@ -44,6 +44,14 @@ main {
   justify-content: flex-start;
 }
 
+.name-input-container {
+  padding: 15px;
+}
+
+.player-name-container {
+  padding: 5px;
+}
+
 main h2 {
   font-size: 18px;
   margin: 5px;
@@ -76,7 +84,20 @@ main h2 {
 }
 
 .game-box:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+#reset {
+  padding: 15px;
+  margin: 15px;
+  font-size: 18px;
+  background-color: var(--500);
+  color: var(--100);
+}
+
+#reset:hover {
+  cursor: pointer;
+  color: red;
 }
 
 footer {

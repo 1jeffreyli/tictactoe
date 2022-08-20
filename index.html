@@ -15,8 +15,23 @@
         <h1>Tic Tac Toe</h1>
       </header>
       <main>
+        <form action="/script.js" class="player-names">
+          <div class="name-input-container">
+            <div class="player-name-container">
+              <label for="playerX"> Player X name: </label>
+              <input type="text" name="playerX" id="playerX" />
+              <button type="submit">Submit</button>
+            </div>
+            <div class="player-name-container">
+              <label for="playerO"> Player O name: </label>
+              <input type="text" name="playerO" id="playerO" />
+              <button type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
         <h2>Gameboard</h2>
         <div class="gameboard"></div>
+        <button id="reset">Reset</button>
       </main>
       <footer>
         <p>
