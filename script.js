@@ -56,6 +56,7 @@ const gameController = (() => {
 
   function checkWin () {
     const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
+    let gameOver = false;
     let winConditions = [
       [0, 1, 2],
       [3, 4, 5],
@@ -69,6 +70,10 @@ const gameController = (() => {
     winConditions.forEach(item => {
       if (gameBoard.board[item[0]] === marker && gameBoard.board[item[1]] === marker && gameBoard.board[item[2]] === marker) {
         alert(`${marker} winner!`);
+        gameOver = true;
+      } else if (round === 9 && gameOver === false) {
+        gameOver = true;
+        alert("Tie");
       };
     });
   }
