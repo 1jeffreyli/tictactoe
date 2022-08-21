@@ -1,46 +1,38 @@
 const Player = (name, character) => {
   this.name = name;
   this.character = character;
-  function getName () {
+  function getName() {
     return name;
   }
-  function getCharacter () {
+  function getCharacter() {
     return character;
   }
-  return { getName, getCharacter }
-  }
+  return { getName, getCharacter };
+};
 
 const displayController = (() => {
   const resetBtn = document.getElementById("reset");
   // displays the gameboard using DOM methods
-  function render (array) {
-    gameBoard.board.forEach((cell) => {
+  function render(array) {
+    array.forEach((cell) => {
       const div = document.createElement("div");
       div.classList.add("game-box");
       div.innerText = cell;
       gameBoard.boardContainer.appendChild(div);
-    })
+    });
   }
-  // resetBtn.addEventListener("click", (event) => {
-  //   gameBoard.reset();
-  //   gameController.reset();
-  //   // gameBoard.updateBoard();
-  //   // render(gameBoard.board);
-  // });
 
-  // function reset () {
-  //   gameBoard.board = ["", "", "", "", "", "", "", "", ""];
-  //   for (let i = 0; i < 9; i++) {
-  //     gameBoard.boardContainer.innerText= "";
-  //     render(gameBoard.board);
-  //     gameController.round = 1;
-  //   }
-  // }
-  // resetBtn.addEventListener("click", reset);
+  // add reset feature to reset button, resetting the board array, display, and game flow
+  resetBtn.addEventListener("click", () => {
+    gameBoard.reset();
+    gameController.reset();
+    render(gameBoard.board);
+  });
+
   return {
-    render
-  }
-}) ();
+    render,
+  };
+})();
 
 const gameController = (() => {
   // assign X and O roles
@@ -56,16 +48,17 @@ const gameController = (() => {
         alert("Sorry, please choose a different square");
         // if box is empty, check which player goes then add their marker and update the board
       } else if (target.innerText != "O" && target.innerText != "X") {
-        const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
+        const marker =
+          round % 2 ? playerX.getCharacter() : playerO.getCharacter();
         target.innerText = marker;
         gameBoard.updateBoard();
         // go to the next round
-        return round++; 
+        return round++;
       }
     }
   }
 
-  function checkWin () {
+  function checkWin() {
     const marker = round % 2 ? playerX.getCharacter() : playerO.getCharacter();
     let gameOver = false;
     let winConditions = [
@@ -76,33 +69,42 @@ const gameController = (() => {
       [2, 4, 6],
       [0, 3, 6],
       [1, 4, 7],
-      [2, 5, 8]
-    ]
-    winConditions.forEach(item => {
-      if (gameBoard.board[item[0]] === marker && gameBoard.board[item[1]] === marker && gameBoard.board[item[2]] === marker) {
+      [2, 5, 8],
+    ];
+    winConditions.forEach((item) => {
+      if (
+        gameBoard.board[item[0]] === marker &&
+        gameBoard.board[item[1]] === marker &&
+        gameBoard.board[item[2]] === marker
+      ) {
         gameOver = true;
         gameBoard.removePlay();
-        alert(`${marker} winner!`);
-      } else if (round === 9 && gameOver === false && gameBoard.board[item[0]] !== marker && gameBoard.board[item[1]] !== marker) {
+        alert(`Player ${marker} is the winner!`);
+      } else if (
+        round === 9 &&
+        gameOver === false &&
+        gameBoard.board[item[0]] !== marker &&
+        gameBoard.board[item[1]] !== marker
+      ) {
         gameOver = true;
         alert("Tie");
-      };
+      }
     });
   }
-  
-  // function reset () {
-  //   round = 1;
-  //   gameOver = false;
-  // }
-  
-  return{
+
+  function reset() {
+    round = 1;
+    gameOver = false;
+  }
+
+  return {
     playerX,
     playerO,
     play,
     checkWin,
-    reset
-  }
-}) ();
+    reset,
+  };
+})();
 
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
@@ -111,21 +113,22 @@ const gameBoard = (() => {
   // use event delegation on the container instead of individually adding 9 event listeners
   boardContainer.addEventListener("click", gameController.play);
   // iterate through the DOM to update the board array
-  function updateBoard () {
+  function updateBoard() {
     for (let i = 0; i < 9; i++) {
       board[i] = boxes[i].innerText;
     }
     gameController.checkWin();
   }
-  // function reset () {
-  //   board.fill("", 0, 9);
-  // }
+  function reset() {
+    board.fill("", 0, 9);
+    boardContainer.innerHTML = "";
+  }
 
-  function addPlay () {
+  function addPlay() {
     boardContainer.addEventListener("click", gameController.play);
   }
 
-  function removePlay () {
+  function removePlay() {
     boardContainer.removeEventListener("click", gameController.play);
   }
 
@@ -134,9 +137,9 @@ const gameBoard = (() => {
     boardContainer,
     boxes,
     updateBoard,
-    // reset,
-    removePlay
-  }
-}) ();
+    reset,
+    removePlay,
+  };
+})();
 
 displayController.render(gameBoard.board);
