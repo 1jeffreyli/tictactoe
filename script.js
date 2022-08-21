@@ -10,8 +10,6 @@ const Player = (name, character) => {
   return { getName, getCharacter }
   }
 
-
-
 const displayController = (() => {
   const resetBtn = document.getElementById("reset");
   // displays the gameboard using DOM methods
@@ -23,16 +21,22 @@ const displayController = (() => {
       gameBoard.boardContainer.appendChild(div);
     })
   }
+  // resetBtn.addEventListener("click", (event) => {
+  //   gameBoard.reset();
+  //   gameController.reset();
+  //   // gameBoard.updateBoard();
+  //   // render(gameBoard.board);
+  // });
 
-  function reset () {
-    gameBoard.board = ["", "", "", "", "", "", "", "", ""];
-    for (let i = 0; i < 9; i++) {
-      gameBoard.boardContainer.innerText= "";
-      render(gameBoard.board);
-      gameController.round = 1;
-    }
-  }
-  resetBtn.addEventListener("click", reset);
+  // function reset () {
+  //   gameBoard.board = ["", "", "", "", "", "", "", "", ""];
+  //   for (let i = 0; i < 9; i++) {
+  //     gameBoard.boardContainer.innerText= "";
+  //     render(gameBoard.board);
+  //     gameController.round = 1;
+  //   }
+  // }
+  // resetBtn.addEventListener("click", reset);
   return {
     render
   }
@@ -76,8 +80,9 @@ const gameController = (() => {
     ]
     winConditions.forEach(item => {
       if (gameBoard.board[item[0]] === marker && gameBoard.board[item[1]] === marker && gameBoard.board[item[2]] === marker) {
-        alert(`${marker} winner!`);
         gameOver = true;
+        gameBoard.removePlay();
+        alert(`${marker} winner!`);
       } else if (round === 9 && gameOver === false && gameBoard.board[item[0]] !== marker && gameBoard.board[item[1]] !== marker) {
         gameOver = true;
         alert("Tie");
@@ -85,12 +90,17 @@ const gameController = (() => {
     });
   }
   
+  // function reset () {
+  //   round = 1;
+  //   gameOver = false;
+  // }
+  
   return{
     playerX,
     playerO,
-    round,
     play,
-    checkWin
+    checkWin,
+    reset
   }
 }) ();
 
@@ -107,11 +117,25 @@ const gameBoard = (() => {
     }
     gameController.checkWin();
   }
+  // function reset () {
+  //   board.fill("", 0, 9);
+  // }
+
+  function addPlay () {
+    boardContainer.addEventListener("click", gameController.play);
+  }
+
+  function removePlay () {
+    boardContainer.removeEventListener("click", gameController.play);
+  }
+
   return {
     board,
     boardContainer,
     boxes,
-    updateBoard
+    updateBoard,
+    // reset,
+    removePlay
   }
 }) ();
 
